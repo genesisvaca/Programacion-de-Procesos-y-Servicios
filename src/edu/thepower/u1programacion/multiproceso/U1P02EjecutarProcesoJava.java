@@ -1,6 +1,7 @@
 package edu.thepower.u1programacion.multiproceso;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -20,7 +21,7 @@ public class U1P02EjecutarProcesoJava {
         // 2 Mediante BufferReader, capturar con un String,
         // que se comunique el proceso que lanza y el que ejecuta,
         // construyendo un canal de comunicación
-        try {
+        /*try {
             pb.redirectErrorStream(true); // *1 Nos ahorramos el segundo flujo de BufferReader redirigiéndolo el error a la estándar
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -34,10 +35,20 @@ public class U1P02EjecutarProcesoJava {
 
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
-            }1*/
+            }1
         } catch (IOException e) {
             System.err.println("Error al iniciar el proceso");
             e.printStackTrace();
+        }*/
+
+
+        // Opción 3 Volcar salida a Fichero
+        pb.redirectOutput(new File("./resources/salida.txt")); // Crea fichero salida.txt en resources
+        pb.redirectError(new File("./resources/error.txt"));
+        try {
+            pb.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
