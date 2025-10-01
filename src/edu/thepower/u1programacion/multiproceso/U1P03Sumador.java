@@ -16,7 +16,7 @@ public class U1P03Sumador {
         for (int i = num1; i <= num2; i++) {
             suma += i;
         }
-        System.out.println("La suma de los números entre "+ num1 + " y "+ num2 + " es: " + suma);
+        System.out.println("La suma de los numeros entre "+ num1 + " y "+ num2 + " es: " + suma);
     }
 
 
