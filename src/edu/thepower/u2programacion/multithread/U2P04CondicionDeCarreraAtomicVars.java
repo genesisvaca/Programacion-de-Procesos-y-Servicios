@@ -6,8 +6,9 @@ public class U2P04CondicionDeCarreraAtomicVars {
 
     private static final int ITERACIONES = 1_000_000;
     private static final int VALOR = 10;
+    // AtomicInteger (Permiten la exclusión mutua, solo dejan que un thread a la vez las modifique,
+    // se bloquea hasta que no termine de hacer la modificación) es más restrictivo, solo bloquea la variable
     private static AtomicInteger contador = new AtomicInteger(0);
-
 
     private static void incrementarContador ( int num){
 
@@ -32,7 +33,7 @@ public class U2P04CondicionDeCarreraAtomicVars {
             System.out.println("Finalizando ejecución incrementar");
         });
 
-        // Thread para decrementar el valor de la variable  contador en "Iteraciones" veces
+        // Thread para decrementar el valor de la variable contador en "Iteraciones" veces
         Thread threadDecrementar = new Thread( ()-> {
             System.out.println("Iniciando ejecución decrementar");
             for (int i = 0; i < ITERACIONES; i++) {
@@ -54,7 +55,6 @@ public class U2P04CondicionDeCarreraAtomicVars {
         }
 
         System.out.println("El valor final de contador es: " + getContador());
-
 
     }
 
