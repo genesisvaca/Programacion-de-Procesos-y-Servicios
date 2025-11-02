@@ -1,4 +1,13 @@
 # 🧠 Programming of Processes and Services
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-Java-9B5DE5?style=for-the-badge&logo=java&logoColor=white" alt="Java Badge">
+  <img src="https://img.shields.io/badge/Focus-Multithreading%20%7C%20Sockets%20%7C%20Concurrency-FEC89A?style=for-the-badge" alt="Focus Badge">
+  <img src="https://img.shields.io/badge/Concepts-Processes%20%26%20Services-84A59D?style=for-the-badge" alt="Concepts Badge">
+  <img src="https://img.shields.io/badge/Environment-Java%20SE%20%7C%20CLI%20%7C%20Networking-64C9CF?style=for-the-badge" alt="Environment Badge">
+  <img src="https://img.shields.io/badge/Status-In%20Progress-FD6F96?style=for-the-badge" alt="Status Badge">
+</p>
+
 ### 📚 Subject Overview
 
 Programming of Processes and Services focuses on how computer programs interact with the operating system, run concurrently, and communicate through services and networks.
