@@ -8,12 +8,12 @@
   <img src="https://img.shields.io/badge/Status-In%20Progress-FD6F96?style=for-the-badge" alt="Status Badge">
 </p>
 
-### 📚 Subject Overview
+## 📚 Subject Overview
 
 Programming of Processes and Services focuses on how computer programs interact with the operating system, run concurrently, and communicate through services and networks.
 The course introduces key concepts of process management, concurrent programming, client-server applications, network services, and security mechanisms such as encryption.
 
-### 🧩 Key Concepts
+## 🧩 Key Concepts
 ### 🔸 Process
 
 A process is a running instance of a program.
@@ -43,23 +43,23 @@ In this unit, we learn how to create and manage processes in Java using the Proc
 * Running multiple processes in parallel
 
 ### 🔹 Practical exercises:
-#### 🧾 U1P01 – Execute Process
+- #### 🧾 U1P01 – Execute Process
 
 Create a Java program that runs another application (e.g., Notepad) using ProcessBuilder.
 
-#### 🧾 U1P02 – Execute Java Process
+- #### 🧾 U1P02 – Execute Java Process
 
 Execute a Java Virtual Machine from within another Java program and capture its output using BufferedReader or redirect it to files (salida.txt, error.txt).
 
-#### 🧾 U1P03 – ExecSumador / Sumador
+- #### 🧾 U1P03 – ExecSumador / Sumador
 
 Run five concurrent processes, each receiving two random numbers and calculating the sum of all integers between them.
 
-#### 🧾 U1P04 – ContadorVocal
+- #### 🧾 U1P04 – ContadorVocal
 
 Create multiple processes, each counting occurrences of a different vowel in a text file, and store the results separately.
 
-#⚙️ Unit 2 – Concurrent Programming with Threads (Multithreaded)
+# ⚙️ Unit 2 – Concurrent Programming with Threads (Multithreaded)
 
 This unit focuses on threads, which are lightweight sub-processes sharing the same memory space.
 You will learn how to create, start, and synchronize threads in Java.
