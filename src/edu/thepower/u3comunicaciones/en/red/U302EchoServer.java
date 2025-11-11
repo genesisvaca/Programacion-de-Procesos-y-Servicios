@@ -42,6 +42,7 @@ public class U302EchoServer {
             BufferedReader input = new BufferedReader(new InputStreamReader(in));
 
             String line= null;
+
             while ((line = input.readLine()) != null) {
                 System.out.println("| " + getFecha() + " | Recibido del cliente: " + line + " |");
                 pw.println(line.toLowerCase());
