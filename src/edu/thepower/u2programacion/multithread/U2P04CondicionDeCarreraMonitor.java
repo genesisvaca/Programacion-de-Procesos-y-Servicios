@@ -24,14 +24,14 @@ public class U2P04CondicionDeCarreraMonitor {
 
 
     /* ─────────────────────────────────────────────────────────────
-       BLOQUE 2: Método sincronizado de escritura/modificación
+       BLOQUE 2: Métdo sincronizado de escritura/modificación
        Objetivo: modificar de forma segura la variable compartida.
        Importante: al ser static synchronized, el monitor es la CLASE.
        ───────────────────────────────────────────────────────────── */
 
-    // Método que incrementa (o decrementa) el contador de forma EXCLUSIVA.
-    // synchronized en un método estático => solo 1 hilo de esta clase
-    // puede estar aquí o en otro método estático synchronized al mismo tiempo.
+    // Métdo que incrementa (o decrementa) el contador de forma EXCLUSIVA.
+    // synchronized en un métdo estático => solo 1 hilo de esta clase
+    // puede estar aquí o en otro métdo estático synchronized al mismo tiempo.
     private static synchronized void incrementarContador (int num){
 
         // Mensaje de traza para ver cuándo un hilo entra al monitor.
@@ -57,12 +57,12 @@ public class U2P04CondicionDeCarreraMonitor {
 
 
     /* ─────────────────────────────────────────────────────────────
-       BLOQUE 3: Método sincronizado de lectura
+       BLOQUE 3: Métdo sincronizado de lectura
        Objetivo: leer el valor del contador de forma igualmente protegida,
        para que la lectura no vea un estado a medias.
        ───────────────────────────────────────────────────────────── */
 
-    // Método de lectura también synchronized para que no haya lecturas
+    // Métdo de lectura también synchronized para que no haya lecturas
     // mientras otro hilo está escribiendo. Se bloquea sobre el mismo monitor.
     public static synchronized int getContador(){
 
@@ -77,7 +77,7 @@ public class U2P04CondicionDeCarreraMonitor {
             throw new RuntimeException(e);
         }
 
-        // Indicamos que vamos a salir del método sincronizado.
+        // Indicamos que vamos a salir del métdo sincronizado.
         System.out.println("Saliendo de getContador");
 
         // Devolvemos el valor ACTUAL del contador, ya seguro.
@@ -92,7 +92,7 @@ public class U2P04CondicionDeCarreraMonitor {
            Objetivo: crear dos hilos que compiten por la misma variable:
              - uno suma VALOR muchas veces
              - otro resta VALOR muchas veces
-           Ambos usan el MISMO método sincronizado -> no hay condición de carrera.
+           Ambos usan el MISMO métdo sincronizado -> no hay condición de carrera.
            ───────────────────────────────────────────────────────── */
 
         /*
@@ -102,9 +102,9 @@ public class U2P04CondicionDeCarreraMonitor {
             System.out.println("Iniciando ejecución incrementar");
 
             // Bucle que simula muchas operaciones concurrentes sobre la variable.
-            // Si este método NO fuera synchronized, aquí habría condición de carrera.
+            // Si este métdo NO fuera synchronized, aquí habría condición de carrera.
             for (int i = 0; i < ITERACIONES; i++) {
-                // Llamamos al método que modifica el contador de forma segura.
+                // Llamamos al métdo que modifica el contador de forma segura.
                 incrementarContador(VALOR);
             }
 
@@ -116,7 +116,7 @@ public class U2P04CondicionDeCarreraMonitor {
         Thread threadDecrementar = new Thread( ()-> {
             System.out.println("Iniciando ejecución decrementar");
             for (int i = 0; i < ITERACIONES; i++) {
-                // Reutilizamos el mismo método, pero pasándole un número negativo;
+                // Reutilizamos el mismo métdo, pero pasándole un número negativo;
                 // así demostramos que un mismo punto crítico sirve para sumar y restar.
                 incrementarContador(-VALOR);
             }
@@ -138,7 +138,7 @@ public class U2P04CondicionDeCarreraMonitor {
             throw new RuntimeException(e);
         }
 
-        // Al final, leemos el valor del contador con el método sincronizado
+        // Al final, leemos el valor del contador con el métdo sincronizado
         // para asegurarnos de que nadie más lo está modificando en ese momento.
         System.out.println("El valor final de contador es: " + getContador());
         */

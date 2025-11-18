@@ -4,182 +4,137 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-// Versión corregida en clase
+// ───────────────────────────────────────────────────────────────
+// COMENTARIO GENERAL DEL PROGRAMA
+// ----------------------------------------------------------------
+// Este programa cuenta cuántas veces aparece una vocal específica
+// (por ejemplo, 'a' o 'é') dentro de un archivo de texto.
+//
+// Está pensado para ejecutarse desde otro programa principal
+// (Ej. EjecutarContadorVocales), que podría lanzar varios procesos
+// paralelos, uno por cada vocal, pasando como argumentos:
+//   - La vocal a contar.
+//   - La ruta del archivo.
+//
+// También maneja vocales acentuadas gracias a un mapa de equivalencias.
+// Ejemplo de uso desde consola:
+//    java U1P04ContadorVocal a ./resources/texto.txt
+//
+// Resultado: muestra en consola cuántas veces aparece 'a' o 'á'.
+// ───────────────────────────────────────────────────────────────
 public class U1P04ContadorVocal {
 
-    private static final Map <Character,Character> VOCALES;
+    /* ─────────────────────────────────────────────────────────────
+       BLOQUE 1: ESTRUCTURA DE DATOS ESTÁTICA (MAPA DE VOCALES)
+       ----------------------------------------------------------------
+       - Este mapa relaciona cada vocal sin tilde con su vocal acentuada.
+       - Es estático porque se comparte entre todas las instancias.
+       - Se usa para contar tanto la versión normal como la acentuada.
+       Ejemplo: 'a' → 'á', 'e' → 'é', etc.
+       ───────────────────────────────────────────────────────────── */
+    private static final Map<Character, Character> VOCALES;
 
-    static{
-        VOCALES = new HashMap();
-        VOCALES.put('a','á');
-        VOCALES.put('e','é');
-        VOCALES.put('i','í');
-        VOCALES.put('o','ó');
-        VOCALES.put('u','ú');
+    static {
+        VOCALES = new HashMap<>();
+        VOCALES.put('a', 'á');
+        VOCALES.put('e', 'é');
+        VOCALES.put('i', 'í');
+        VOCALES.put('o', 'ó');
+        VOCALES.put('u', 'ú');
     }
 
 
-
+    /* ─────────────────────────────────────────────────────────────
+       BLOQUE 2: MÉTDO contarVocal()
+       ----------------------------------------------------------------
+       - Cuenta cuántas veces aparece una vocal (con o sin tilde)
+         en el archivo especificado.
+       - Recibe:
+           → char vocal: vocal base a buscar ('a', 'e', etc.)
+           → String archivo: ruta al archivo de texto.
+       - Abre el archivo con BufferedReader y lo recorre línea por línea.
+       - Convierte cada línea a minúsculas para evitar errores
+         de coincidencia con mayúsculas.
+       - Incrementa un contador cada vez que encuentra la vocal.
+       - Si el archivo no existe o no se puede leer, muestra el error.
+       ───────────────────────────────────────────────────────────── */
     private void contarVocal(char vocal, String archivo) {
 
+        // Variable local que acumula el número de apariciones.
         int contador = 0;
 
-        try (BufferedReader in = new BufferedReader( new FileReader(archivo))) {
+        // try-with-resources: garantiza que el archivo se cierre automáticamente
+        // después de usarlo, incluso si ocurre una excepción.
+        try (BufferedReader in = new BufferedReader(new FileReader(archivo))) {
 
             String line;
+            // Se lee el archivo línea por línea hasta que no haya más.
             while ((line = in.readLine()) != null) {
 
+                // Convertimos tdo el texto a minúsculas
+                // para comparar sin distinguir entre mayúsculas y minúsculas.
                 line = line.toLowerCase();
 
+                // Recorremos cada carácter de la línea
                 for (int i = 0; i < line.length(); i++) {
-
-                    if (line.charAt(i) == vocal || line.charAt(i) == VOCALES.get(vocal) )
+                    // Si el carácter actual coincide con la vocal base
+                    // o con su versión acentuada, aumentamos el contador.
+                    if (line.charAt(i) == vocal || line.charAt(i) == VOCALES.get(vocal))
                         contador++;
                 }
             }
 
         } catch (FileNotFoundException e) {
+            // Se lanza si el archivo no existe.
             System.err.println("Archivo no encontrado: " + archivo);
             throw new RuntimeException(e);
+
         } catch (IOException e) {
+            // Error general de lectura (por ejemplo, permisos, encoding...).
             System.err.println("Error en lectura de archivo: " + archivo);
             throw new RuntimeException(e);
         }
 
+        // Muestra el resultado final del conteo por consola.
         System.out.println(contador);
-
     }
 
 
+    /* ─────────────────────────────────────────────────────────────
+       BLOQUE 3: MÉTDO PRINCIPAL (main)
+       ----------------------------------------------------------------
+       - Recibe los argumentos de línea de comandos:
+         args[0] → vocal a contar
+         args[1] → nombre o ruta del archivo.
+       - Crea una instancia de la clase y llama a contarVocal().
+       - Este main se usa cuando se ejecuta esta clase de forma individual
+         o desde otro proceso (por ejemplo, con ProcessBuilder).
+       ───────────────────────────────────────────────────────────── */
     public static void main(String[] args) {
 
-
+        // Se crea un objeto de la clase (porque el métdo contarVocal no es estático)
         U1P04ContadorVocal test = new U1P04ContadorVocal();
 
-        test.contarVocal(args[0].charAt(0),args[1]);
+        // Se llama al métdo contarVocal, pasando:
+        // - la primera letra del primer argumento como vocal,
+        // - la ruta del archivo como segundo argumento.
+        // Ejemplo: args = {"a", "./texto.txt"}
+        test.contarVocal(args[0].charAt(0), args[1]);
     }
-    // Que las vocales salgan de los argumentos desde eñ array de strings del main --Como con los números--
-    //Crear ejecutarContadorVocales con 5 procesos
 
+    // ─────────────────────────────────────────────────────────────
+    // NOTAS Y COMENTARIOS ADICIONALES (contexto de práctica)
+    // ----------------------------------------------------------------
+    // • Este programa se puede ejecutar de forma independiente, o bien
+    //   desde otro programa que lance varios procesos (por ejemplo:
+    //   EjecutarContadorVocales).
+    //
+    // • En ese caso, el programa principal podría crear 5 procesos:
+    //   uno por cada vocal ('a', 'e', 'i', 'o', 'u'), cada uno ejecutando
+    //   esta clase y pasando la vocal y el mismo archivo como parámetros.
+    //
+    // • Así se estaría utilizando programación multiproceso para
+    //   procesar el mismo archivo en paralelo, mejorando el rendimiento
+    //   y aprovechando la CPU.
+    // ─────────────────────────────────────────────────────────────
 }
-
-/*
-
-  Programa multiproceso que cuenta cuántas veces aparece cada vocal
-  en un archivo de texto. Las vocales y la ruta del archivo se pasan
-  por argumentos desde la configuración (args).
-public class U1P04ContadorVocal {
-
-
-    private static final Map <Character,Character> VOCALES ;
-
-    // Darle valor a un Mapa estático
-    static {
-        VOCALES = new HashMap();
-        VOCALES.put('a','á');
-        VOCALES.put('e','é');
-        VOCALES.put('i','í');
-        VOCALES.put('o','ó');
-        VOCALES.put('u','ú');
-    }
-
-    // Métdo que cuenta cuántas veces aparece una vocal en un archivo.
-    // Devuelve el número total de apariciones.
-    public int contadorVocal(char vocal, String archivo) {
-        int contador = 0;
-
-        try (BufferedReader in = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            while ((linea = in.readLine()) != null) {
-                linea = linea.toLowerCase();
-                for (int i = 0; i < linea.length(); i++) {
-                    if (linea.charAt(i) == Character.toLowerCase(vocal)) {
-                        contador++;
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("✗ Archivo no encontrado: " + archivo);
-            throw new RuntimeException();
-        } catch (IOException e) {
-            System.err.println("✗ Error al leer el archivo: " + archivo);
-            throw new RuntimeException();
-        }
-
-        System.out.println("Vocal '" + vocal + "' → " + contador);
-        return contador;
-    }
-
-
-    //Guarda el resultado de cada conteo en un archivo individual.
-    public void guardarResultado(char vocal, int conteo) {
-        String nombreSalida = "resultado_" + vocal + ".txt";
-        try (PrintWriter out = new PrintWriter(new FileWriter(nombreSalida))) {
-            out.println(conteo);
-            System.out.println("✓ Resultado guardado en: " + nombreSalida);
-        } catch (IOException e) {
-            System.err.println("✗ Error al escribir el archivo de salida: " + nombreSalida);
-        }
-    }
-
-    // Clase interna que representa un proceso (Thread) para una vocal específica.
-    static class ProcesoVocal extends Thread {
-        private final char vocal;
-        private final String archivo;
-        private final U1P04ContadorVocal contador;
-
-        public ProcesoVocal(char vocal, String archivo, U1P04ContadorVocal contador) {
-            this.vocal = vocal;
-            this.archivo = archivo;
-            this.contador = contador;
-        }
-
-        @Override
-        public void run() {
-            int total = contador.contadorVocal(vocal, archivo);
-            if (total >= 0) {
-                contador.guardarResultado(vocal, total);
-            }
-        }
-    }
-
-
-    // MAIN: Las vocales y el nombre del archivo se reciben por args.
-    public static void main(String[] args) {
-
-
-        // Validación de argumentos
-        if (args.length < 2) {
-            System.out.println("Uso correcto: java U1P04ContadorVocal [vocales...] [archivo]");
-            System.out.println("Ejemplo: a e i o u ./resources/vocales.txt");
-            return;
-        }
-
-        // Último argumento → nombre del archivo
-        String archivo = args[args.length - 1];
-
-        // El resto → vocales
-        char[] vocales = new char[args.length - 1];
-        for (int i = 0; i < args.length - 1; i++) {
-            if (args[i].length() != 1 || !"aeiouAEIOUáéíóú".contains(args[i])) {
-                System.out.println("✗ '" + args[i] + "' no es una vocal válida. Se ignora.");
-                continue;
-            }
-            vocales[i] = args[i].toLowerCase().charAt(0);
-        }
-
-        U1P04ContadorVocal cv = new U1P04ContadorVocal();
-
-        System.out.println("=== INICIO DE PROCESOS DE CONTEO ===");
-
-        for (char v : vocales) {
-            if (v != '\0') { // ignorar posiciones vacías
-                ProcesoVocal p = new ProcesoVocal(v, archivo, cv);
-                p.start();
-            }
-        }
-    }
-    // Corregido
-
-
-}*/

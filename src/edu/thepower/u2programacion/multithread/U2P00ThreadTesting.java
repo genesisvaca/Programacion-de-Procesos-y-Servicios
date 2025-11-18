@@ -11,14 +11,14 @@ public class U2P00ThreadTesting {
      * al uso de la clase Thread dentro del contexto de programación concurrente.
      *
      * El objetivo es entender que, incluso si no se crean hilos adicionales,
-     * todo programa Java se ejecuta dentro de al menos un hilo llamado "main".
+     * tdo programa Java se ejecuta dentro de al menos un hilo llamado "main".
      *
      * Se utilizan distintos métodos de la clase Thread para obtener información
      * sobre ese hilo actual: su nombre, identificador único (ID), prioridad,
      * estado y grupo al que pertenece.
      *
      * En resumen, este programa NO crea nuevos hilos, sino que consulta y muestra
-     * las características del hilo principal en el que corre el método main().
+     * las características del hilo principal en el que corre el métdo main().
      */
 
     public static void main(String[] args) {
