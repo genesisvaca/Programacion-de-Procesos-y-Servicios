@@ -2,6 +2,7 @@ package edu.thepower.u3comunicaciones.en.red;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class U3P00EchoClientGood {
     public static void main(String[] args) {
@@ -12,8 +13,17 @@ public class U3P00EchoClientGood {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             PrintWriter pw = new PrintWriter(out, true);
 
-            pw.println("Mesanje que devuelve");
-            System.out.println("Lo que recibe el servidor" + br.readLine());
+            Scanner sc = new Scanner(System.in);
+
+            String msg;
+
+            do{
+                System.out.println("Introduce un texto: ");
+                msg = sc.nextLine().trim();
+                pw.println(msg);
+                System.out.println("Lo que recibe el servidor" + br.readLine());
+            }while(!msg.equalsIgnoreCase("/salir"));
+
         } catch (Exception e) {
             System.err.println("Error en la conexion: " + e.getMessage());
         }

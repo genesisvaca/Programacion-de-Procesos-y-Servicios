@@ -44,11 +44,14 @@ public class U3P02EchoServer {
 
             Socket socket = serverSocket.accept();
 
+            System.out.println("Cliente conectado: " + socket.getInetAddress() + ":" + socket.getPort());
+
             InputStream in = socket.getInputStream();
             OutputStream out = socket.getOutputStream();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             PrintWriter pw = new PrintWriter(out, true);
+
 
             String entrada;
             while((entrada = br.readLine())!= null){
