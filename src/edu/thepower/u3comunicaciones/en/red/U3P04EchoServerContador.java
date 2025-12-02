@@ -52,6 +52,7 @@ public class U3P04EchoServerContador {
 
                         default -> "Comando no valido";
                     };
+                    pw.println(respuesta);
 
                 }
 
